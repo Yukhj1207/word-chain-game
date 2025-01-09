@@ -1084,7 +1084,7 @@ singleplay_button['text'] = '싱글플레이'
 singleplay_button['fg'] = '#000000'
 singleplay_button['bg'] = '#FFFFFF'
 
-multiplay_button = Button(main_menu_frm,relief='flat',command=lambda: ui.show_next_frm(main_menu_frm,multiplay_frm,'access_server'),font=("ONE Mobile POP", 30))
+multiplay_button = Button(main_menu_frm,relief='flat',command=lambda: ui.show_next_frm(main_menu_frm,multiplay_frm,'multiplay_button'),font=("ONE Mobile POP", 30))
 multiplay_button.place(x=95,y=300,width=410,height=40)
 multiplay_button['text'] = '멀티플레이'
 multiplay_button['fg'] = '#000000'
