@@ -1,5 +1,9 @@
 # 싱글과 멀티플레이가 가능한 api활용 끝말잇기 게임
 
+
+https://github.com/user-attachments/assets/6b94cbd6-86fb-44d3-b168-2ba11dc651f8.mp4
+
+
 ## 게임 규칙
  한국어기초사전에 등제된 단어여야 합니다.
  이미 사용된 단어는 다시 사용할 수 없습니다.
