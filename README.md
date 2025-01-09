@@ -1,8 +1,7 @@
-# API와 socket을 활용한 싱글,멀티 끝말잇기 게임
+# API와 socket을 활용한 싱글,멀티(2인) 끝말잇기 게임
 
-
+## 게임 화면
 https://github.com/user-attachments/assets/6b94cbd6-86fb-44d3-b168-2ba11dc651f8.mp4
-
 
 ## 게임 규칙
  한국어기초사전에 등제된 단어여야 합니다.
