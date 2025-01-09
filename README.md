@@ -15,9 +15,9 @@
 
 ## 참고사항
  1. 본 게임은 한국어기초사전의 데이터를 참고하여 단어를 검증합니다.
-    한국어기초사전 사이트: https://krdict.korean.go.kr/
+    한국어기초사전 사이트: ![](https://krdict.korean.go.kr/)
     일부 단어는 누락되어 있을 수 있으니 참고 바랍니다.
  2. 학교 포트폴리오용으로 제작된 코드입니다.
  3. 이 코드에서 이용하는 API는 하루에 25,000건만 호출이 가능합니다.
  4. pdjdev님의 코드를 참고하여 만들어졌습니다.
-    참고 코드 주소: https://github.com/pdjdev/py_endtoend?tab=readme-ov-file
+    참고 주소: ![](https://github.com/pdjdev/py_endtoend?tab=readme-ov-file)
