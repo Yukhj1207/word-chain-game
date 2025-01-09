@@ -1,4 +1,4 @@
-##Word Chain Game
+##싱글과 멀티플레이가 가능한 api활용 끝말잇기 게임
 ##Single and multi-player compatible API for playing a word chain game.
 
 *******************************************게임 규칙 (Game Rules)********************************************
