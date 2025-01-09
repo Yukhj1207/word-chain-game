@@ -94,7 +94,7 @@ class Game:
     
     #단어 유무 검증 함수
     def check_word_validity(self,query):
-        apikey = '8015501B7F4DA8A4D78B18B2CF957C43'
+        apikey = '발급받은 API키 붙여넣는곳'
         url = f'https://krdict.korean.go.kr/api/search?key={apikey}&part=word&q={query}'  #한국어기초사전 주소
         response = requests.get(url)
         if response.status_code == 200: #HTTP 요청 응답 확인
@@ -119,7 +119,7 @@ class Game:
             return {'exists': False}
 
     def has_noun(self,word):
-        apikey = '8015501B7F4DA8A4D78B18B2CF957C43'
+        apikey = '발급받은 API키 붙여넣는곳'
         url = f'https://krdict.korean.go.kr/api/search?key={apikey}&part=word&q={word}'  # XML 형식으로 요청
         response = requests.get(url)
         if response.status_code == 200:
@@ -188,7 +188,7 @@ class Game:
 
     # 시작 글자로 시작하는 단어를 검색하는 함수
     def fetch_word_from_api(self, start_char,difficulty):
-        apikey = '8015501B7F4DA8A4D78B18B2CF957C43'
+        apikey = '발급받은 API키 붙여넣는곳'
         url = f'https://krdict.korean.go.kr/api/search?key={apikey}&part=word&q={start_char}*&num=100'
         response = requests.get(url)
         if response.status_code == 200:
