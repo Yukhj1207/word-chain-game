@@ -1,4 +1,4 @@
-# API를 활용한 싱글,멀티 끝말잇기 게임
+# API와 socket을 활용한 싱글,멀티 끝말잇기 게임
 
 
 https://github.com/user-attachments/assets/6b94cbd6-86fb-44d3-b168-2ba11dc651f8.mp4
@@ -15,7 +15,8 @@ https://github.com/user-attachments/assets/6b94cbd6-86fb-44d3-b168-2ba11dc651f8.
 2. [한국어기초사전 오픈 API 서비스 소개 페이지](https://krdict.korean.go.kr/openApi/openApiInfo)로 가 API키 발급을 신청합니다.
 3. 발급받은 API키를 check_word_validity,has_noun,fetch_word_from_api 함수의
    apikey = '발급받은 API키 붙여넣는곳' 부분의 (발급받은 API키 붙여넣는곳)를 지우고 발급받은 API키를 넣습니다.
-4. 스크립트를 실행합니다.
+4. 와이파이에 연결합니다.(싱글플레이는 이더넷도 가능)
+5. 스크립트를 실행합니다.
 
 ## 멀티플레이
 1. 두 컴퓨터에서 각각 스크립트를 실행해야합니다.
