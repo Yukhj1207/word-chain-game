@@ -46,8 +46,9 @@ Built as a personal portfolio project by a high school software student, it show
 > GPT usage for AI mode requires OpenAI key and separate setup.
 
 ## Gameplay
-![Uploading image.png…]()
-
+<img width="896" height="646" alt="Image" src="https://github.com/user-attachments/assets/6b545064-3983-4860-9c36-1855d71f8d8e" />
+<img width="895" height="640" alt="Image" src="https://github.com/user-attachments/assets/0a2330b0-9c07-444d-854d-7e400c69c318" />
+<img width="449" height="323" alt="Image" src="https://github.com/user-attachments/assets/b6da413b-8df0-4226-97c3-bdf5fe0f5579" />
 
 ## Author
 - Name: Hyunjin Yuk (육현진)
