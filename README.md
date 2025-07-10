@@ -28,6 +28,7 @@ Built as a personal portfolio project by a high school software student, it show
 ### Requirements
 - Python 3.11
 - `requests` module (install with `pip install requests`)
+- 'openai' module (install with 'pip install requests')
 - API key from [Korean Dictionary Open API](https://krdict.korean.go.kr/openApi/openApiInfo)
 
 ### Setup
