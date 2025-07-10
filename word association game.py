@@ -4,6 +4,7 @@ import ipaddress
 import requests
 import random
 import time
+import openai
 import xml.etree.ElementTree as ET
 from tkinter import *
 from tkinter import font
@@ -14,6 +15,8 @@ network_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 network_socket.connect(("8.8.8.8", 80))
 local_ip = network_socket.getsockname()[0]
 network_socket.close()
+apikey = 'Enter your dictionary API key here'
+openai.api_key = 'Enter your OpenAI API key here'
 
 class Game:
     def __init__(self,ui):
@@ -94,7 +97,6 @@ class Game:
     
     #단어 유무 검증 함수
     def check_word_validity(self,query):
-        apikey = '발급받은 API키 붙여넣는곳'
         url = f'https://krdict.korean.go.kr/api/search?key={apikey}&part=word&q={query}'  #한국어기초사전 주소
         response = requests.get(url)
         if response.status_code == 200: #HTTP 요청 응답 확인
@@ -119,7 +121,6 @@ class Game:
             return {'exists': False}
 
     def has_noun(self,word):
-        apikey = '발급받은 API키 붙여넣는곳'
         url = f'https://krdict.korean.go.kr/api/search?key={apikey}&part=word&q={word}'  # XML 형식으로 요청
         response = requests.get(url)
         if response.status_code == 200:
@@ -188,7 +189,6 @@ class Game:
 
     # 시작 글자로 시작하는 단어를 검색하는 함수
     def fetch_word_from_api(self, start_char,difficulty):
-        apikey = '발급받은 API키 붙여넣는곳'
         url = f'https://krdict.korean.go.kr/api/search?key={apikey}&part=word&q={start_char}*&num=100'
         response = requests.get(url)
         if response.status_code == 200:
@@ -211,33 +211,42 @@ class Game:
             return self.filter_words_by_difficulty(words,difficulty)
         return []
 
-    # 난이도별 단어 필터링
-    def filter_words_by_difficulty(self, words, difficulty):
-        if difficulty == 0:
-            # 쉬운 단어: 2~3 글자
-            fixed_words = [word for word in words if 2 <= len(word) <= 3]
-        elif difficulty == 1:
-            # 보통 단어: 4~5 글자
-            fixed_words = [word for word in words if 4 <= len(word) <= 5]
-            if len(fixed_words) == 0:
-                fixed_words = [word for word in words if 2 <= len(word) <= 3]
-        elif difficulty == 2:
-            # 어려운 단어: 6 글자 이상
-            fixed_words = [word for word in words if len(word) >= 6]
-            if len(fixed_words) == 0:
-                fixed_words = [word for word in words if 4 <= len(word) <= 5]
-                if len(fixed_words) == 0:
-                    fixed_words = [word for word in words if 2 <= len(word) <= 3]
-        
-        # 랜덤으로 하나 선택
-        return random.sample(fixed_words, len(fixed_words)) if fixed_words else []
+    #gpt에게 난이도에 맞는 단어를 추천받는 함수
+    def check_word_validity_gpt(previous_word, user_word, difficulty):
+        prompt = (
+            f"다음은 단어 끝말잇기기 게임입니다.\n"
+            f"난이도는 0,1,2 각각 쉬움,중간,어려움이 있는데 그중 {difficulty}입니다.\n"
+            f"두음법칙을 이용할 수 있습니다. 예) '녀'는 '여'로 시작하는 단어를 사용할 수 있습니다.\n"
+            f"상대방이 말한 단어는 {user_word}입니다.\n"
+            f"상대방의 단어의 마지막 문자: {user_word[-1]}로 시작하는 단어를 난이도에 맞게 실제로 존재하는 명사 단어 한개만 추천해주세요..\n"
+            f"만약 {user_word[-1]}로 시작하는 실제로 존재하는 명사 단어가 없다면 '패배하였습니다.'라고 대답해주세요."
+        )
+
+        try:
+            response = openai.ChatCompletion.create(
+                model='gpt-4',
+                messages=[
+                    {"role": "system", "content": "너는 끝말잇기를 하는 사람의 상대 플레이어인 AI이다."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=5,
+                temperature=0
+            )
+            answer = response.choices[0].message.content.strip()
+            if answer.lower() == '패배하였습니다.':
+                return False
+            else:
+                return answer
+        except Exception as e:
+            print("API 호출 실패:", e)
+            return False
 
     # AI의 단어 선택 함수
     def select_ai_word(self, start_char,difficulty):
-        words = self.fetch_word_from_api(start_char,difficulty)
-        if words:
-            return random.choice(words)  # 랜덤으로 단어 선택
-        return None  # 사용할 단어가 없을 경우
+        words = self.check_word_validity_gpt(start_char,difficulty)
+        if not words:
+            return None
+        return words
 
     #싱글플레이의 과정과 승패를 결정하는 함수
     def singleplay_player(self,first_interation):
@@ -287,8 +296,8 @@ class Game:
         self.my_remaining_time = timer.get_timer_duration(self.user_word)
         self.word_list.append(self.user_word)
         self.next_letter_for_message = self.user_word[-1]
-        difficulty = ui.get_current_index()
-        ai_word = self.select_ai_word(self.next_letter_for_message,difficulty)
+        difficulty = ui.get_current_index() #----------------------------------------------------------------------------------------------------
+        ai_word = self.select_ai_word(self.user_word,difficulty)
         if not ai_word:
             result = messagebox.askyesno("승리", f"AI가 단어를 찾지 못했습니다.\n다시 하시겠습니까?")
             self.reset_game()
@@ -785,13 +794,13 @@ class UI:
         if direction == "left" and self.current_index > 0:
             self.current_index -= 1
             right_button.config(state='normal')
-            if self.current_index == 0:
-                left_button.config(state='disabled')
+            #if self.current_index == 0:
+            #    left_button.config(state='disabled')
         elif direction == "right" and self.current_index < 2:
             self.current_index += 1
             left_button.config(state='normal')
-            if self.current_index == 2:
-                right_button.config(state='disabled')
+            #if self.current_index == 2:
+            #    right_button.config(state='disabled')
         difficulty_label.config(text=difficulty_levels[self.current_index])
 
 class Loading:
