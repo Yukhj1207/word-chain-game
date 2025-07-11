@@ -57,7 +57,7 @@ Built as a personal portfolio project by a high school software student, it show
 - Code reference inspiration: [pdjdev/py_endtoend](https://github.com/pdjdev/py_endtoend)
 
 ## Project Duration
-May 2024 – September 2024
+July 2024 – May 2025
 
 ## Known Limitations
 - Dictionary API may miss some valid words
